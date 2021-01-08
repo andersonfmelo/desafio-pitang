@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { GitService } from '../services/git.service';
@@ -6,11 +5,11 @@ import { GridOptions } from "ag-grid-community";
 import {formatDate} from '@angular/common';
 
 @Component({
-  selector: 'app-ranking',
-  templateUrl: './ranking.component.html',
-  styleUrls: ['./ranking.component.scss']
+  selector: 'app-last-search',
+  templateUrl: './last-search.component.html',
+  styleUrls: ['./last-search.component.scss']
 })
-export class RankingComponent implements OnInit {
+export class LastSearchComponent implements OnInit {
 
   public gridOptions:GridOptions;
   public rowData:any[];
@@ -29,18 +28,14 @@ export class RankingComponent implements OnInit {
   };
   this.columnDefs = [
       { 
-        headerName: 'User',
-        width: 80, 
+        headerName: 'Ultimas Pesquisas', 
         sortable: false,
         suppressMenu: true, 
         pinned: true,
-        field: "repo" 
+        field: "lastsearch" 
 
       },
-      {
-        headerName: 'URL',
-        field: "url" 
-      }
+
   ];
   this.rowData = [];
   }
@@ -49,28 +44,15 @@ export class RankingComponent implements OnInit {
     this.createForm();
   }
   private createForm() {
-    // this.form = this.formBuilder.group({
-    //   nome: ['', Validators.required],
-    //   cnpj: ['', Validators.required],
-    //   responsavel: ['', Validators.required],
-    // });
+
     this.form = this.formBuilder.group({
       nome: ['', Validators.required],
     });
-    this.gitService.getUsers()
-    .subscribe(users => {
-      //console.log(users);
-      this.repositorios.push(users)
-      console.log(this.repositorios);
-      let newRow = [];
-      this.repositorios[0].forEach(element => {
+    
+    let newUser = JSON.parse(localStorage.getItem('lastsearch'));
+    if(newUser!=null)this.rowData = newUser;
 
-        newRow.push({ repo: element.login, url: element.html_url});
-        this.rowData = newRow;
-      });
-    });
   }
-
 }
 export class usuario {
   nome: string = ''

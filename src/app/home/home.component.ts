@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   dados = [];
   repositorios = [];
   nome = '';
+  lastsearch = [];
 
   constructor(private gitService:GitService, private formBuilder: FormBuilder) { 
     this.usergridOptions = <GridOptions>{
@@ -84,7 +85,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //localStorage.removeItem("user");
+    //localStorage.removeItem("lastsearch");
+    let lsearch = JSON.parse(localStorage.getItem('lastsearch'));
+    if(lsearch!=null)this.lastsearch = lsearch;
     let newUser = JSON.parse(localStorage.getItem('user'));
     if(newUser!=null)this.userData = newUser;
     let newRow = JSON.parse(localStorage.getItem('row'));
@@ -92,11 +95,6 @@ export class HomeComponent implements OnInit {
     this.createForm();
   }
   private createForm() {
-    // this.form = this.formBuilder.group({
-    //   nome: ['', Validators.required],
-    //   cnpj: ['', Validators.required],
-    //   responsavel: ['', Validators.required],
-    // });
     this.form = this.formBuilder.group({
       nome: ['', Validators.required],
     });
@@ -105,12 +103,19 @@ export class HomeComponent implements OnInit {
   submit(){
     this.repositorios = [];
     this.dados = [];
+
+
     const result: usuario = Object.assign({}, this.form.value);
+    if(this.lastsearch.length<5)this.lastsearch.push({lastsearch:result.nome});
+    else{
+      this.lastsearch.splice(0,1);
+      this.lastsearch.push({lastsearch:result.nome});
+    }
+    localStorage.setItem('lastsearch', JSON.stringify(this.lastsearch));
     this.gitService.usuario = result.nome;
     this.gitService.getUserData()
       .subscribe(users => {
         let newRow = [];
-        //console.log(users);
         this.dados.push(users);
         if(this.dados[0].name!=null)newRow.push({data: "Nome", value: this.dados[0].name});
         if(this.dados[0].login!=null)newRow.push({data: "Usuario", value: this.dados[0].login });
@@ -131,7 +136,7 @@ export class HomeComponent implements OnInit {
         let newRow = [];
         this.repositorios[0].forEach(element => {
 
-          newRow.push({ repo: element.name, data: formatDate(element.updated_at, 'dd-MM-yyyy', 'en-US')});
+          newRow.push({ repo: element.name, data: formatDate(element.updated_at, 'yyyy-MM-dd', 'en-US')});
           this.rowData = newRow;
           localStorage.setItem('row', JSON.stringify(this.rowData));
         });

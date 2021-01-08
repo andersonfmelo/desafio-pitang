@@ -9,6 +9,7 @@ import { GitService } from './services/git.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AgGridModule } from 'ag-grid-angular';
 import { RankingComponent } from './ranking/ranking.component';
+import { LastSearchComponent } from './last-search/last-search.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { RankingComponent } from './ranking/ranking.component';
     AppComponent,
     HomeComponent,
     RankingComponent,
+    LastSearchComponent,
   ],
   imports: [
     BrowserModule,
