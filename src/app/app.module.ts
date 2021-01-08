@@ -8,12 +8,14 @@ import { HomeComponent } from './home/home.component';
 import { GitService } from './services/git.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AgGridModule } from 'ag-grid-angular';
+import { RankingComponent } from './ranking/ranking.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    RankingComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,9 @@ export class GitService {
   usuario = '';
 
   constructor(private http: HttpClient) { }
+  getUsers() {
+    return this.http.get(`${this.apiUrl}/users?per_page=5`);
+  }
   getUserData() {
     return this.http.get(`${this.apiUrl}/users/${this.usuario}`);
   }

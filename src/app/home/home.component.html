@@ -6,8 +6,8 @@
       <div class="d-flex">
         <h3 class="float-md-start mb-0">GitHub</h3>
         <nav class="nav nav-masthead justify-content-center ml-auto">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-          <a class="nav-link" href="#">Ranking</a>
+          <a class="nav-link active" aria-current="page" href="Home">Home</a>
+          <a class="nav-link" href="Ranking">Ranking</a>
         </nav>
       </div>
     </header>
@@ -20,28 +20,28 @@
         <input type="text" class="form-control mb-5" placeholder="@seuusuario" formControlName="nome"/>
         <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white" (click)="submit()">Buscar</a>
       </p>
-      <!--<ul class="list-group  mb-5">
-        <li *ngIf="dados[0].name!=null;" class="form-control">{{dados[0].name}}</li>
-        <li *ngIf="dados[0].name==null;" class="form-control">{{dados[0].login}}</li>
-        <li *ngIf="dados[0].type!=null;" class="form-control">{{dados[0].type}}</li>
-        <li *ngIf="dados[0].followers!=null;" class="form-control">{{dados[0].followers}}</li>
-        <li *ngIf="dados[0].email!=null;" class="form-control">{{dados[0].email}}</li>
-        <li *ngIf="dados[0].twitter_username!=null;" class="form-control">{{dados[0].twitter_username}}</li>
-      </ul>
-        <ul class="list-group" >
-          <li *ngFor="let repos of repositorios[0];" class="form-control">{{repos.name}}</li>
-        </ul> -->
-        
+        <div class="mb-5">
+        <ag-grid-angular 
+        style="width: 100%; height: 200px;"
+        class="ag-theme-alpine"
+        [gridOptions]="usergridOptions"
+        [rowData]="userData"
+        [columnDefs]="usercolumnDefs"
+        [defaultColDef]="defaultColDef"
+        >
+        </ag-grid-angular>
+      </div>
+      <div>
         <ag-grid-angular 
         style="width: 100%; height: 500px;"
         class="ag-theme-alpine"
         [gridOptions]="gridOptions"
         [rowData]="rowData"
         [columnDefs]="columnDefs"
-        
-      >
-      <!--<ag-grid-column headerName="Make" [resizable]="true" [minWidth]="350"></ag-grid-column>-->
-      </ag-grid-angular>
+        [defaultColDef]="defaultColDef"
+        >
+        </ag-grid-angular>
+      </div>
       </form>
 
     </main>
