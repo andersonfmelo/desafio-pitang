@@ -49,17 +49,13 @@ export class RankingComponent implements OnInit {
     this.createForm();
   }
   private createForm() {
-    // this.form = this.formBuilder.group({
-    //   nome: ['', Validators.required],
-    //   cnpj: ['', Validators.required],
-    //   responsavel: ['', Validators.required],
-    // });
+
     this.form = this.formBuilder.group({
       nome: ['', Validators.required],
     });
     this.gitService.getUsers()
     .subscribe(users => {
-      //console.log(users);
+
       this.repositorios.push(users)
       console.log(this.repositorios);
       let newRow = [];

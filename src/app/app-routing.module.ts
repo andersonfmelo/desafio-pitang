@@ -8,7 +8,7 @@ import { LastSearchComponent } from './last-search/last-search.component';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    redirectTo: 'Home',
     pathMatch: 'full'
   },
   {

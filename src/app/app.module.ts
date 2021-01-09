@@ -18,6 +18,7 @@ import { LastSearchComponent } from './last-search/last-search.component';
     HomeComponent,
     RankingComponent,
     LastSearchComponent,
+    
   ],
   imports: [
     BrowserModule,

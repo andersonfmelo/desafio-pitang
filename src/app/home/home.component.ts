@@ -18,11 +18,13 @@ export class HomeComponent implements OnInit {
   public rowData:any[];
   public columnDefs:any[];
   public defaultColDef;
+  
   form!: FormGroup;
   dados = [];
   repositorios = [];
   nome = '';
   lastsearch = [];
+  isToggle=false;
 
   constructor(private gitService:GitService, private formBuilder: FormBuilder) { 
     this.usergridOptions = <GridOptions>{
@@ -42,7 +44,6 @@ export class HomeComponent implements OnInit {
     },
     { 
       headerName: 'Valor', 
-      width: 80,
       field: "value" ,
       enableValue: true,
       suppressMenu: true,
@@ -85,25 +86,31 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //localStorage.removeItem("lastsearch");
+    
     let lsearch = JSON.parse(localStorage.getItem('lastsearch'));
     if(lsearch!=null)this.lastsearch = lsearch;
+
+
     let newUser = JSON.parse(localStorage.getItem('user'));
     if(newUser!=null)this.userData = newUser;
+
+
     let newRow = JSON.parse(localStorage.getItem('row'));
     if(newRow!=null)this.rowData = newRow;
+
     this.createForm();
   }
+
   private createForm() {
     this.form = this.formBuilder.group({
       nome: ['', Validators.required],
     });
   }
 
+  
   submit(){
     this.repositorios = [];
     this.dados = [];
-
 
     const result: usuario = Object.assign({}, this.form.value);
     if(this.lastsearch.length<5)this.lastsearch.push({lastsearch:result.nome});
@@ -111,17 +118,20 @@ export class HomeComponent implements OnInit {
       this.lastsearch.splice(0,1);
       this.lastsearch.push({lastsearch:result.nome});
     }
+
     localStorage.setItem('lastsearch', JSON.stringify(this.lastsearch));
     this.gitService.usuario = result.nome;
     this.gitService.getUserData()
       .subscribe(users => {
         let newRow = [];
         this.dados.push(users);
+
         if(this.dados[0].name!=null)newRow.push({data: "Nome", value: this.dados[0].name});
         if(this.dados[0].login!=null)newRow.push({data: "Usuario", value: this.dados[0].login });
         if(this.dados[0].email!=null)newRow.push({data: "E-Mail", value: this.dados[0].email });
         if(this.dados[0].followers!=null)newRow.push({data: "Seguidores", value: this.dados[0].followers });
         if(this.dados[0].twitter_username!=null)newRow.push({data: "Twitter", value: this.dados[0].twitter_username});
+        
         this.userData = newRow;
         console.log(this.dados);
         localStorage.setItem('user', JSON.stringify(this.userData));
@@ -130,7 +140,7 @@ export class HomeComponent implements OnInit {
     
     this.gitService.getUserRepos()
       .subscribe(users => {
-        //console.log(users);
+  
         this.repositorios.push(users)
         console.log(this.repositorios);
         let newRow = [];
