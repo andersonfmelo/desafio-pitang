@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   repositorios = [];
   nome = '';
   lastsearch = [];
-  isToggle=false;
+  mobile=false;
 
   constructor(private gitService:GitService, private formBuilder: FormBuilder) { 
     this.usergridOptions = <GridOptions>{
@@ -97,6 +97,10 @@ export class HomeComponent implements OnInit {
 
     let newRow = JSON.parse(localStorage.getItem('row'));
     if(newRow!=null)this.rowData = newRow;
+
+    if (window.screen.width < 500) { // 768px portrait
+      this.mobile = true;
+    }
 
     this.createForm();
   }

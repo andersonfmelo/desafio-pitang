@@ -2,14 +2,33 @@
 
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
   
+    <nav role="navigation" *ngIf="mobile">
+      <div id="menuToggle">
+
+        <input type="checkbox" />
+        
+        <span></span>
+        <span></span>
+        <span></span>
+        
+
+        <ul id="menu">
+          <a class="nav-link active" aria-current="page" href="Home">Home</a>
+          <a class="nav-link" href="Ranking">Ranking</a>
+          <a class="nav-link" href="LastSearch">Last Search</a>
+        </ul>
+      </div>
+    </nav>
+
     <header class="mb-auto">
       <div class="d-flex">
         <h3 class="float-md-start mb-0">GitHub</h3>
-        <nav class="nav nav-masthead justify-content-center ml-auto">
-          <a class="nav-link" href="Home">Home</a>
+        <nav class="nav nav-masthead justify-content-center ml-auto" *ngIf="!mobile">
+          <a class="nav-link active" aria-current="page" href="Home">Home</a>
           <a class="nav-link" href="Ranking">Ranking</a>
-          <a class="nav-link active" aria-current="page"  href="LastSearch">Last Search</a>
+          <a class="nav-link" href="LastSearch">Last Search</a>
         </nav>
+        
       </div>
     </header>
     

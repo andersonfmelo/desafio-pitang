@@ -19,6 +19,7 @@ export class LastSearchComponent implements OnInit {
   dados = [];
   repositorios = [];
   nome = '';
+  mobile=false;
 
   constructor(private gitService:GitService, private formBuilder: FormBuilder) { 
     this.gridOptions = <GridOptions>{
@@ -41,6 +42,11 @@ export class LastSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    if (window.screen.width < 500) { // 768px portrait
+      this.mobile = true;
+    }
+
     this.createForm();
   }
   private createForm() {
