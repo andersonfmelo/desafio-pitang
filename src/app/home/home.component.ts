@@ -24,7 +24,12 @@ export class HomeComponent implements OnInit {
   repositorios = [];
   nome = '';
   lastsearch = [];
-  mobile=false;
+
+  imgsrc='';
+  name='';
+  login='';
+  followers=null;
+  following=null;
 
   constructor(private gitService:GitService, private formBuilder: FormBuilder) { 
     this.usergridOptions = <GridOptions>{
@@ -72,6 +77,7 @@ export class HomeComponent implements OnInit {
         enableValue: true,
         filter: 'agNumberColumnFilter',
         aggFunc: 'sum',
+
       },
       {
         headerName: 'Data da Ultima Atualização',
@@ -92,15 +98,20 @@ export class HomeComponent implements OnInit {
 
 
     let newUser = JSON.parse(localStorage.getItem('user'));
-    if(newUser!=null)this.userData = newUser;
+    if(newUser!=null){
+      this.dados[0] = newUser;
+    }
+    if(this.dados[0]!=null){
+      if(this.dados[0].avatar_url!=null)this.imgsrc=this.dados[0].avatar_url;
+      if(this.dados[0].name!=null)this.name=this.dados[0].name;
+      if(this.dados[0].login!=null)this.login=this.dados[0].login;
+      if(this.dados[0].followers!=null)this.followers=this.dados[0].followers;
+      if(this.dados[0].following!=null)this.following=this.dados[0].following;
+    }
 
 
     let newRow = JSON.parse(localStorage.getItem('row'));
     if(newRow!=null)this.rowData = newRow;
-
-    if (window.screen.width < 500) { // 768px portrait
-      this.mobile = true;
-    }
 
     this.createForm();
   }
@@ -115,6 +126,11 @@ export class HomeComponent implements OnInit {
   submit(){
     this.repositorios = [];
     this.dados = [];
+    this.imgsrc='';
+    this.name='';
+    this.login='';
+    this.followers=null;
+    this.following=null;
 
     const result: usuario = Object.assign({}, this.form.value);
     if(this.lastsearch.length<5)this.lastsearch.push({lastsearch:result.nome});
@@ -124,21 +140,20 @@ export class HomeComponent implements OnInit {
     }
 
     localStorage.setItem('lastsearch', JSON.stringify(this.lastsearch));
+
     this.gitService.usuario = result.nome;
     this.gitService.getUserData()
       .subscribe(users => {
-        let newRow = [];
-        this.dados.push(users);
 
-        if(this.dados[0].name!=null)newRow.push({data: "Nome", value: this.dados[0].name});
-        if(this.dados[0].login!=null)newRow.push({data: "Usuario", value: this.dados[0].login });
-        if(this.dados[0].email!=null)newRow.push({data: "E-Mail", value: this.dados[0].email });
-        if(this.dados[0].followers!=null)newRow.push({data: "Seguidores", value: this.dados[0].followers });
-        if(this.dados[0].twitter_username!=null)newRow.push({data: "Twitter", value: this.dados[0].twitter_username});
+        this.dados.push(users);
+        if(this.dados[0].avatar_url!=null)this.imgsrc=this.dados[0].avatar_url;
+        if(this.dados[0].name!=null)this.name=this.dados[0].name;
+        if(this.dados[0].login!=null)this.login=this.dados[0].login;
+        if(this.dados[0].followers!=null)this.followers=this.dados[0].followers;
+        if(this.dados[0].following!=null)this.following=this.dados[0].following;
         
-        this.userData = newRow;
         console.log(this.dados);
-        localStorage.setItem('user', JSON.stringify(this.userData));
+        localStorage.setItem('user', JSON.stringify(this.dados[0]));
       });
 
     
@@ -155,6 +170,10 @@ export class HomeComponent implements OnInit {
           localStorage.setItem('row', JSON.stringify(this.rowData));
         });
       });
+  }
+  limpar(){
+    localStorage.removeItem('user');
+    localStorage.removeItem('row');
   }
 
 }

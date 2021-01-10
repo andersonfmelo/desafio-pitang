@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { GitService } from '../services/git.service';
 import { GridOptions } from "ag-grid-community";
-import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-last-search',
