@@ -171,10 +171,6 @@ export class HomeComponent implements OnInit {
         });
       });
   }
-  limpar(){
-    localStorage.removeItem('user');
-    localStorage.removeItem('row');
-  }
 
 }
 export class usuario {
