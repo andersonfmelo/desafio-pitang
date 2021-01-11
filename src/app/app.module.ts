@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AgGridModule } from 'ag-grid-angular';
 import { RankingComponent } from './ranking/ranking.component';
 import { LastSearchComponent } from './last-search/last-search.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HeaderComponent } from './shared/header/header.component';
 
 
 @NgModule({
@@ -18,6 +20,7 @@ import { LastSearchComponent } from './last-search/last-search.component';
     HomeComponent,
     RankingComponent,
     LastSearchComponent,
+    HeaderComponent,
     
   ],
   imports: [
@@ -27,7 +30,7 @@ import { LastSearchComponent } from './last-search/last-search.component';
     HttpClientModule,
     AgGridModule.withComponents([])
   ],
-  providers: [GitService],
+  providers: [GitService,{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

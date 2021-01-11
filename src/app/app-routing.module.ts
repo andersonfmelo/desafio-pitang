@@ -6,30 +6,28 @@ import { LastSearchComponent } from './last-search/last-search.component';
 
 
 const routes: Routes = [
+
   {
     path: '',
-    redirectTo: 'Home',
-    pathMatch: 'full'
-  },
-  {
-    path: 'Home',
     component: HomeComponent,
     pathMatch: 'full'
   },  
   {
-    path: 'Ranking',
-    component: RankingComponent,
-    pathMatch: 'full'
+    path: 'home',
+    component: HomeComponent,
   },  
   {
-    path: 'LastSearch',
+    path: 'ranking',
+    component: RankingComponent,
+  },  
+  {
+    path: 'lastsearch',
     component: LastSearchComponent,
-    pathMatch: 'full'
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{ useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
